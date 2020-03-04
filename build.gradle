@@ -2,3 +2,12 @@ plugins {
     id "java"
     id "idea"
 }
+
+group = "com.github.dkurata38"
+version = "0.0.1"
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
