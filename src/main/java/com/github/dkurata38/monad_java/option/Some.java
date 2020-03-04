@@ -3,6 +3,7 @@ package com.github.dkurata38.monad_java.option;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -11,7 +12,7 @@ import java.util.function.Supplier;
 public final class Some<A> extends Option<A> {
 	private final A value;
 
-	public Some(A value) {
+	private Some(A value) {
 		this.value = value;
 	}
 
@@ -72,12 +73,12 @@ public final class Some<A> extends Option<A> {
 
 	@Override
 	Option<A> filter(Predicate<A> p) {
-		return p.test(value) ? new Some<>(value) : new None<>();
+		return p.test(value) ? new Some<>(value) : None.of();
 	}
 
 	@Override
 	Option<A> filterNot(Predicate<A> p) {
-		return p.test(value) ? new None<>() : new Some<>(value);
+		return p.test(value) ? None.of() : new Some<>(value);
 	}
 
 	@Override
@@ -103,5 +104,10 @@ public final class Some<A> extends Option<A> {
 	@Override
 	public Iterator<A> iterator() {
 		return toList().iterator();
+	}
+
+	public static <A> Option<A> of(A value) {
+		Objects.requireNonNull(value);
+		return new Some<>(value);
 	}
 }

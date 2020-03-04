@@ -3,6 +3,7 @@ package com.github.dkurata38.monad_java.option;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -90,18 +91,18 @@ public abstract class Option<A> implements Iterable<A>, Serializable {
 	 */
 	abstract Boolean contains(A elem);
 
-	/**
-	 * Combine two optional values to make a paired optional value
+	/*
+	  Combine two optional values to make a paired optional value
 	 */
 //	abstract <B> void zip();
 
-	/**
-	 * Split an optional pair to two optional values
+	/*
+	  Split an optional pair to two optional values
 	 */
 //	abstract void unzip();
 
-	/**
-	 * Split an optional triple to three optional values
+	/*
+	  Split an optional triple to three optional values
 	 */
 //	abstract void unzip3();
 
@@ -112,9 +113,15 @@ public abstract class Option<A> implements Iterable<A>, Serializable {
 
 	public static <A> Option<A> wrap(A value) {
 		if (Objects.nonNull(value)) {
-			return new Some<>(value);
+			return Some.of(value);
 		} else {
-			return new None<>();
+			return None.of();
 		}
+	}
+
+	public static <A> Option<A> from(@SuppressWarnings("OptionalUsedAsFieldOrParameterType") Optional<A> optional) {
+		return optional
+				.map(Some::of)
+				.orElse(None.of());
 	}
 }

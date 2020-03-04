@@ -10,6 +10,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public final class None<A> extends Option<A> {
+	private None() {
+	}
+
 	@Override
 	Boolean isDefined() {
 		return false;
@@ -98,5 +101,9 @@ public final class None<A> extends Option<A> {
 	@Override
 	public Iterator<A> iterator() {
 		return toList().iterator();
+	}
+
+	public static <A> Option<A> of() {
+		return new None<>();
 	}
 }
